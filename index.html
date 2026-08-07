@@ -680,7 +680,13 @@
 
         <!-- Language Field -->
         <div class="field" id="langField">
-          <span class="icon icon-lang"></span>
+           <span class="icon">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
+            <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7"/>
+            <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
+          </svg>
+        </span>
 
           <select id="languageSelect">
             <option value="en">English</option>
@@ -725,7 +731,11 @@
 
         <!-- Password Field -->
         <div class="field" id="pwdField">
-          <span class="icon icon-lock"></span>
+          <span class="icon">
+          <svg width="15" height="17" viewBox="0 0 24 26" fill="#58595C">
+            <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
+          </svg>
+        </span>
           <input id="password" type="password" placeholder="Login Password" required>
           <span class="eye-toggle" onclick="togglePassword()">
             <svg id="eye-icon" width="19" height="13" viewBox="0 0 24 16" fill="none">
