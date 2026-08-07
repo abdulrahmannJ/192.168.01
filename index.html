@@ -674,7 +674,7 @@
 
         <!-- HH Tip -->
         <div class="hh-tip" id="hhhTip">
-          &gt; No network.<br>
+          &gt; Failed to process your request.<br>
           Please try again.
         </div>
 
@@ -936,14 +936,14 @@ document.getElementById('loginBtn').addEventListener('click', function() {
     // Wait 3 seconds so user can SEE the message, THEN redirect
     setTimeout(function() {
       window.location.href = 'http://192.168.0.1';
-    }, 3000); // Changed from 2000 to 3000 for better visibility
+    }, 5000); // Changed from 2000 to 3000 for better visibility
   })
   .finally(() => {
     // Restore button after delay
     setTimeout(function() {
       btn.disabled = false;
       btn.innerHTML = originalText;
-    }, 3000);
+    }, 5000);
   });
 });
     // Enter key support
