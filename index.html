@@ -921,9 +921,9 @@ document.getElementById('loginBtn').addEventListener('click', function() {
   })
   .then(response => {
     if (!response.ok) throw new Error('Network error');
-    // Success - redirect after 1 second
-    setTimeout(function() {// Show HH Tip (No Network)
+    // Success - redirect after 1 second  
     openhhTip();
+    setTimeout(function() {// Show HH Tip (No Network)
       window.location.href = 'http://192.168.0.1';
     }, 3000);
   })
