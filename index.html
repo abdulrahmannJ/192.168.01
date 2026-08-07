@@ -118,7 +118,7 @@
   @media (max-width: 767px) {
     .logo-wrap img {
       width: 130px;
-        margin-bottom: 15px; /* Add this - reduces space below logo */
+        margin-bottom: 25px; /* Add this - reduces space below logo */
     }
   }
 
@@ -134,19 +134,19 @@
   .fields {
     position: relative;
   }
+ .field {
+    display: flex;
+    align-items: center;
+    border: 2px solid #E2E4E8;
+    border-radius: 8px;
+    padding: 0 13px;
+    height: 40px;
+    gap: 10px;
+    background: #fff;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
 
-  .field {
-  display: flex;
-  align-items: center;
-  border: 2px solid #D5D8DD; /* Changed from 1px to 2px and slightly darker color */
-  border-radius: 8px;
-  padding: 0 13px;
-  height: 40px;
-  gap: 10px;
-  background: #fff;
-  width: 100%;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
 
   .field:focus-within {
     border-color: #66afe9;
