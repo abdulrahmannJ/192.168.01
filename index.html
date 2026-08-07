@@ -78,9 +78,88 @@
     padding: 0;
   }
 
-  .field select { cursor: pointer; color: var(--text-dark) !important; }
+  .field select { 
+    cursor: pointer; 
+    color: var(--text-dark) !important; 
+    display: none; /* Hide native select */
+  }
+  
   .field input::placeholder { color: var(--placeholder-gray); }
   .field .chevron { flex-shrink: 0; color: #9DA2A9; }
+
+  /* Custom Dropdown */
+  .custom-select {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .custom-select .selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    height: 100%;
+    color: var(--text-dark);
+    font-size: 14.5px;
+    font-family: inherit;
+    padding: 0;
+    gap: 8px;
+  }
+
+  .custom-select .selected .arrow-down {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .custom-select .selected .arrow-down.open {
+    transform: rotate(180deg);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: -13px;
+    right: -13px;
+    background: #fff;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    box-shadow: var(--dropdown-shadow);
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+    z-index: 10;
+    display: none;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+  }
+
+  .dropdown-menu li {
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .dropdown-menu li:hover {
+    background: #f5f5f5;
+  }
+
+  .dropdown-menu li a {
+    color: var(--text-dark);
+    text-decoration: none;
+    font-size: 14px;
+    font-family: inherit;
+    display: block;
+  }
+
+  .dropdown-menu li.active {
+    background: #f0f0f0;
+    font-weight: 500;
+  }
 
   .eye-toggle {
     flex-shrink: 0;
@@ -167,6 +246,10 @@
 
   @media (max-width: 340px) {
     .page { padding: 24px 20px 20px; }
+     .dropdown-menu {
+      left: -10px;
+      right: -10px;
+    }
   }
 </style>
 </head>
@@ -188,7 +271,7 @@
         &gt; No network.<br>
         Please try again.
       </div>
-      <div class="field">
+       <div class="field">
         <span class="icon">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="9" stroke="#58595C" stroke-width="1.7"/>
@@ -196,18 +279,46 @@
             <line x1="3" y1="12" x2="21" y2="12" stroke="#58595C" stroke-width="1.7"/>
           </svg>
         </span>
-        <select>
-          <option>English</option>
-          <option>中文</option>
-          <option>Español</option>
-          <option>Français</option>
-          <option>Русский</option>
+        <!-- Hidden native select for form compatibility -->
+        <select id="languageSelect">
+          <option value="en">English</option>
+          <option value="zh">繁體中文</option>
+          <option value="ko">한국</option>
+          <option value="de">Deutsch</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="hu">Magyar</option>
+          <option value="it">Italiano</option>
+          <option value="pl">Polski</option>
+          <option value="pt">Português</option>
+          <option value="ro">Română</option>
+          <option value="tr">Türkçe</option>
         </select>
-        <span class="chevron">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <polyline points="6 9 12 15 18 9"/>
-          </svg>
-        </span>
+        <!-- Custom dropdown -->
+        <div class="custom-select" id="customSelect">
+          <div class="selected" id="selectedDisplay">
+            <span id="selectedText">English</span>
+            <span class="arrow-down" id="arrowDown">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </span>
+          </div>
+          <ul class="dropdown-menu" id="dropdownMenu">
+            <li data-val="en" class="active"><a>English</a></li>
+            <li data-val="zh"><a>繁體中文</a></li>
+            <li data-val="ko"><a>한국</a></li>
+            <li data-val="de"><a>Deutsch</a></li>
+            <li data-val="es"><a>Español</a></li>
+            <li data-val="fr"><a>Français</a></li>
+            <li data-val="hu"><a>Magyar</a></li>
+            <li data-val="it"><a>Italiano</a></li>
+            <li data-val="pl"><a>Polski</a></li>
+            <li data-val="pt"><a>Português</a></li>
+            <li data-val="ro"><a>Română</a></li>
+            <li data-val="tr"><a>Türkçe</a></li>
+          </ul>
+        </div>
       </div>
 
       <div class="field">
@@ -243,6 +354,64 @@
   </div>
 
 <script>
+   
+  const customSelect = document.getElementById('customSelect');
+  const selectedDisplay = document.getElementById('selectedDisplay');
+  const selectedText = document.getElementById('selectedText');
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  const arrowDown = document.getElementById('arrowDown');
+  const languageSelect = document.getElementById('languageSelect');
+
+  // Toggle dropdown
+  selectedDisplay.addEventListener('click', function(e) {
+    e.stopPropagation();
+    dropdownMenu.classList.toggle('show');
+    arrowDown.classList.toggle('open');
+  });
+
+  // Select language
+  dropdownMenu.querySelectorAll('li').forEach(function(item) {
+    item.addEventListener('click', function(e) {
+      e.stopPropagation();
+      
+      // Update selected text
+      const text = this.querySelector('a').textContent;
+      const value = this.dataset.val;
+      
+      selectedText.textContent = text;
+      
+      // Update hidden select
+      languageSelect.value = value;
+      
+      // Update active state
+      dropdownMenu.querySelectorAll('li').forEach(function(li) {
+        li.classList.remove('active');
+      });
+      this.classList.add('active');
+      
+      // Close dropdown
+      dropdownMenu.classList.remove('show');
+      arrowDown.classList.remove('open');
+      
+      // Trigger change event on hidden select
+      languageSelect.dispatchEvent(new Event('change'));
+    });
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!customSelect.contains(e.target)) {
+      dropdownMenu.classList.remove('show');
+      arrowDown.classList.remove('open');
+    }
+  });
+
+  // Handle language change
+  languageSelect.addEventListener('change', function() {
+    console.log('Language changed to:', this.value);
+    // You can add language change logic here
+  });
+
   function togglePassword() {
     const input = document.getElementById('password');
     const icon = document.getElementById('eye-icon');
